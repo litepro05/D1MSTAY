@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Masuk admin')}"></head>
+<body class="login-page">
+<main class="login-shell">
+  <section class="login-story"><a class="brand" th:href="@{/}"><span class="brand-mark">D1</span><span>D1MSTAY<small>Pengelolaan kos</small></span></a>
+    <div><p class="eyebrow">RUANG UNTUK LEBIH TERTATA</p><h1>Urus kos.<br>Tanpa catatan<br>yang tercecer.</h1><p>Kamar, penghuni, dan tagihan bulanan.<br>Semua tercatat dalam satu tempat.</p></div>
+    <span class="story-foot">Administrasi kos · D1MSTAY</span>
+  </section>
+  <section class="login-form"><p class="eyebrow">AKSES PENGELOLA</p><h2>Selamat datang.</h2><p class="muted">Masuk untuk mengelola kos D1MSTAY.</p>
+    <div class="alert error" th:if="${param.error}" role="alert">Nama pengguna atau kata sandi tidak cocok.</div>
+    <div class="alert success" th:if="${param.logout}">Kamu sudah keluar dari akun.</div>
+    <form th:action="@{/login}" method="post" class="stack">
+      <label for="username">Nama pengguna<input id="username" name="username" autocomplete="username" required autofocus></label>
+      <label for="password">Kata sandi<input id="password" name="password" type="password" autocomplete="current-password" required></label>
+      <button class="button" type="submit">Masuk ke dashboard <span aria-hidden="true">→</span></button>
+    </form><p class="login-note">Khusus pemilik atau pengelola kos.</p>
+  </section>
+</main>
+</body></html>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+  <action>
+    <actionName>run</actionName>
+    <displayName>Jalankan server D1MSTAY</displayName>
+    <goals><goal>spring-boot:run</goal></goals>
+  </action>
+  <action>
+    <actionName>build</actionName>
+    <goals><goal>package</goal></goals>
+  </action>
+  <action>
+    <actionName>rebuild</actionName>
+    <goals><goal>clean</goal><goal>verify</goal></goals>
+  </action>
+</actions>

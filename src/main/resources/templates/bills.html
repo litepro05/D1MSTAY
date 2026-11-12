@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Tagihan')}"></head>
+<body><aside th:replace="~{fragments :: sidebar}"></aside><div class="workspace"><header th:replace="~{fragments :: topbar}"></header><main>
+<div th:replace="~{fragments :: messages}"></div><div class="page-heading"><div><p class="eyebrow">SEWA BULANAN</p><h1>Tagihan</h1><p class="muted">Periksa tagihan dan catat pembayaran yang sudah diterima.</p></div><a class="button" th:href="@{/bills/new}">+ Buat tagihan</a></div>
+<section class="panel"><form class="filters" th:action="@{/bills}" method="get">
+<label for="q">Nama / kamar<input id="q" name="q" th:value="${q}" placeholder="Cari penghuni atau kamar"></label>
+<label for="period">Periode<input id="period" name="period" type="month" th:value="${period}"></label>
+<label for="status">Status<select id="status" name="status"><option value="">Semua status</option><option value="unpaid" th:selected="${status == 'unpaid'}">Belum Lunas</option><option value="paid" th:selected="${status == 'paid'}">Lunas</option></select></label><button class="button secondary" type="submit">Tampilkan</button><a class="text-link" th:href="@{/bills}">Reset</a></form>
+<div class="panel-heading compact"><span class="muted" th:text="${#lists.size(bills) + ' tagihan'}"></span><strong th:text="${'Total: ' + @display.money(total)}"></strong></div><div th:replace="~{fragments :: bill-table(${bills})}"></div></section>
+</main></div></body></html>

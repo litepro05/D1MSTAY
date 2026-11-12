@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title th:text="${title + ' · D1MSTAY'}">D1MSTAY</title>
+  <link rel="stylesheet" th:href="@{/app.css}">
+  <script th:src="@{/app.js}" defer></script>
+</head>
+<body>
+<aside th:fragment="sidebar" class="sidebar">
+  <a class="brand" th:href="@{/}"><span class="brand-mark">D1</span><span>D1MSTAY<small>Pengelolaan kos</small></span></a>
+  <p class="nav-label">MENU UTAMA</p>
+  <nav aria-label="Menu utama">
+    <a th:href="@{/}" th:classappend="${uri == '/' ? 'active' : ''}" th:attr="aria-current=${uri == '/' ? 'page' : null}"><span class="nav-icon">01</span>Dashboard</a>
+    <a th:href="@{/rooms}" th:classappend="${uri.startsWith('/rooms') ? 'active' : ''}"><span class="nav-icon">02</span>Data kamar</a>
+    <a th:href="@{/residents}" th:classappend="${uri.startsWith('/residents') ? 'active' : ''}"><span class="nav-icon">03</span>Penghuni</a>
+    <a th:href="@{/bills}" th:classappend="${uri.startsWith('/bills') ? 'active' : ''}"><span class="nav-icon">04</span>Tagihan</a>
+    <a th:href="@{/reports}" th:classappend="${uri.startsWith('/reports') ? 'active' : ''}"><span class="nav-icon">05</span>Laporan</a>
+  </nav>
+  <div class="sidebar-bottom"><div class="account"><span class="avatar">A</span><div>Admin kos<small>Satu tempat, lebih tertata.</small></div></div>
+    <form th:action="@{/logout}" method="post"><button class="logout" type="submit">Keluar dari akun <span aria-hidden="true">↗</span></button></form>
+  </div>
+</aside>
+<header th:fragment="topbar" class="topbar"><span>Administrasi / <strong>D1MSTAY</strong></span><span th:text="${@display.date(today)}"></span></header>
+<div th:fragment="messages" aria-live="polite">
+  <div class="alert success" th:if="${notice}" th:text="${notice}"></div>
+  <div class="alert error" role="alert" th:if="${error}" th:text="${error}"></div>
+</div>
+<div th:fragment="form-errors" class="alert error" role="alert" th:if="${#fields.hasGlobalErrors()}">
+  <p th:each="error : ${#fields.globalErrors()}" th:text="${error}"></p>
+</div>
+<div th:fragment="bill-table(records)" class="table-wrap">
+  <table><thead><tr><th>Penghuni / kamar</th><th>Periode</th><th>Nominal</th><th>Jatuh tempo</th><th>Status</th><th><span class="sr-only">Tindakan</span></th></tr></thead>
+    <tbody><tr th:each="bill : ${records}">
+      <td><strong th:text="${bill.resident.name}"></strong><small th:text="${'Kamar ' + bill.resident.room.number}"></small></td>
+      <td th:text="${@display.month(bill.period)}"></td><td class="numeric" th:text="${@display.money(bill.amount)}"></td>
+      <td th:text="${@display.date(bill.dueDate)}"></td>
+      <td><span class="badge" th:classappend="${bill.paid ? 'green' : (bill.overdue ? 'red' : 'amber')}" th:text="${bill.paid ? 'Lunas' : 'Belum Lunas'}"></span><small th:if="${bill.overdue}">Lewat jatuh tempo</small></td>
+      <td><a class="text-link" th:href="@{/bills/{id}(id=${bill.id})}">Rincian →</a></td>
+    </tr><tr th:if="${#lists.isEmpty(records)}"><td colspan="6" class="empty">Belum ada tagihan yang sesuai.</td></tr></tbody>
+  </table>
+</div>
+</body></html>

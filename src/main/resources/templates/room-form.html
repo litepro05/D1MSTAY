@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Formulir kamar')}"></head>
+<body><aside th:replace="~{fragments :: sidebar}"></aside><div class="workspace"><header th:replace="~{fragments :: topbar}"></header><main>
+<a class="back" th:href="@{/rooms}">← Data kamar</a><div class="page-heading"><div><p class="eyebrow">RUANG & TARIF</p><h1 th:text="${form.id == null ? 'Tambah kamar' : 'Edit kamar'}"></h1><p class="muted">Masukkan nomor kamar dan tarif sewa satu bulan penuh.</p></div></div>
+<form class="panel form-panel stack" th:action="@{/rooms/save}" th:object="${form}" method="post">
+<div th:replace="~{fragments :: form-errors}"></div><input type="hidden" th:field="*{id}">
+<label for="number">Nomor kamar<input id="number" th:field="*{number}" placeholder="Contoh: A01" maxlength="30" required><small class="field-error" th:errors="*{number}"></small></label>
+<label for="rate">Tarif per bulan (Rp)<input id="rate" th:field="*{rate}" type="number" min="1" max="999999999999" step="0.01" placeholder="Contoh: 850000" required><small class="field-error" th:errors="*{rate}"></small></label>
+<p class="note">Nominal tagihan lama tetap mengikuti tarif saat tagihan tersebut dibuat.</p><div class="form-actions"><button class="button" type="submit">Simpan kamar</button><a class="button secondary" th:href="@{/rooms}">Batal</a></div>
+</form></main></div></body></html>

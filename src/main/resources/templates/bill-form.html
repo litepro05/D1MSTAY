@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Buat tagihan')}"></head>
+<body><aside th:replace="~{fragments :: sidebar}"></aside><div class="workspace"><header th:replace="~{fragments :: topbar}"></header><main>
+<a class="back" th:href="@{/bills}">← Tagihan</a><div class="page-heading"><div><p class="eyebrow">SEWA BULANAN</p><h1>Buat tagihan</h1><p class="muted">Periksa daftar nominal sebelum menyimpan tagihan.</p></div></div><div th:replace="~{fragments :: messages}"></div>
+<section class="panel"><form class="filters" th:action="@{/bills/new}" method="get">
+<label for="period">Periode tagihan<input id="period" type="month" name="period" th:value="${period}" th:max="${currentMonth}" required></label>
+<label for="residentId">Penghuni<select id="residentId" name="residentId"><option value="">Semua penghuni aktif</option><option th:each="r : ${residents}" th:value="${r.id}" th:text="${r.name + ' · ' + r.room.number}" th:selected="${residentId == r.id}"></option></select></label><button class="button secondary" type="submit">Lihat nominal</button></form>
+<div class="table-wrap"><table><thead><tr><th>Penghuni</th><th>Kamar</th><th>Tarif / nominal tagihan</th></tr></thead><tbody><tr th:each="r : ${preview}"><td th:text="${r.name}"></td><td th:text="${r.room.number}"></td><td th:text="${@display.money(r.room.rate)}"></td></tr><tr th:if="${#lists.isEmpty(preview)}"><td colspan="3" class="empty">Tidak ada tagihan baru untuk pilihan ini. Periksa periode atau tagihan yang sudah tercatat.</td></tr></tbody></table></div>
+<form class="stack padded" th:if="${!#lists.isEmpty(preview)}" th:action="@{/bills/create}" method="post">
+<input type="hidden" name="period" th:value="${period}"><input th:if="${residentId != null}" type="hidden" name="residentId" th:value="${residentId}">
+<label class="narrow" for="dueDate">Tanggal jatuh tempo<input id="dueDate" type="date" name="dueDate" th:value="${dueDate}" required></label><p class="note">Hanya penghuni aktif sejak periode yang dipilih dan belum memiliki tagihan pada periode tersebut yang ditampilkan. Nominal disimpan dari tarif kamar saat tombol Simpan ditekan.</p><div class="form-actions"><button class="button" type="submit" th:text="${'Simpan ' + #lists.size(preview) + ' tagihan'}"></button><a class="button secondary" th:href="@{/bills}">Batal</a></div></form>
+</section></main></div></body></html>

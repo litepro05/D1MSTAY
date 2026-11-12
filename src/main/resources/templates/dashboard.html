@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Dashboard')}"></head>
+<body><aside th:replace="~{fragments :: sidebar}"></aside><div class="workspace"><header th:replace="~{fragments :: topbar}"></header>
+<main><div th:replace="~{fragments :: messages}"></div>
+  <div class="page-heading"><div><p class="eyebrow">RINGKASAN KOS</p><h1>Dashboard</h1><p class="muted">Pantau kamar dan pembayaran dari satu halaman.</p></div><a class="button" th:href="@{/bills/new}">+ Buat tagihan</a></div>
+  <section class="stats" aria-label="Ringkasan kos">
+    <article class="stat"><span>Total kamar</span><strong th:text="${roomCount}"></strong><small>Seluruh kamar terdaftar</small></article>
+    <article class="stat"><span>Kamar terisi</span><strong th:text="${occupied}"></strong><small>Penghuni aktif saat ini</small></article>
+    <article class="stat"><span>Kamar kosong</span><strong th:text="${vacant}"></strong><small>Siap ditempati penghuni</small></article>
+    <article class="stat accent"><span>Penerimaan bulan ini</span><strong class="money" th:text="${@display.money(income)}"></strong><small th:text="${@display.month(currentMonth)}"></small></article>
+  </section>
+  <section class="panel"><div class="panel-heading"><div><h2>Tagihan belum lunas</h2><p class="muted">Seluruh periode · <strong th:text="${@display.money(unpaidTotal)}"></strong> belum diterima</p></div><a class="text-link" th:href="@{/bills(status='unpaid')}">Lihat semua →</a></div>
+    <div th:replace="~{fragments :: bill-table(${unpaid})}"></div>
+  </section>
+  <div class="quick-grid"><a class="quick-card" th:href="@{/rooms}"><span class="eyebrow">01 / KAMAR</span><h3>Kelola ruang yang tersedia <span>↗</span></h3><p>Catat nomor kamar dan tarif sewa bulanan.</p></a><a class="quick-card" th:href="@{/residents/new}"><span class="eyebrow">02 / PENGHUNI</span><h3>Catat penghuni baru <span>↗</span></h3><p>Pilih kamar kosong dan tentukan tanggal masuk.</p></a></div>
+</main><footer>D1MSTAY · Pengelolaan kos</footer></div></body></html>

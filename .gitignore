@@ -1,0 +1,15 @@
+/target/
+/nbproject/private/
+/.local/
+/.env
+/.env.*
+!/.env.example
+credentials.json
+*-local.properties
+*.pgpass
+*.pem
+*.key
+*.log
+*.pid
+/.idea/
+*.iml
