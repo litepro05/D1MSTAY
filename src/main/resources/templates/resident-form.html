@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="id" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments :: head('Formulir penghuni')}"></head>
-<body><aside th:replace="~{fragments :: sidebar}"></aside><div class="workspace"><header th:replace="~{fragments :: topbar}"></header><main>
-<a class="back" th:href="@{/residents}">← Penghuni</a><div class="page-heading"><div><p class="eyebrow">CATATAN PENGHUNIAN</p><h1 th:text="${form.id == null ? 'Tambah penghuni' : 'Edit penghuni'}"></h1><p class="muted">Satu kamar hanya dapat ditempati satu penghuni aktif.</p></div></div>
+<body><aside th:replace="~{fragments :: sidebar}"></aside><div class="workspace"><header th:replace="~{fragments :: topbar}"></header><main id="main-content">
+<a class="back" th:href="@{/residents}"><svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#back}"></use></svg> Penghuni</a><div class="page-heading"><div><p class="eyebrow">CATATAN PENGHUNIAN</p><h1 th:text="${form.id == null ? 'Tambah penghuni' : 'Edit penghuni'}"></h1><p class="muted">Satu kamar hanya dapat ditempati satu penghuni aktif.</p></div></div>
 <form class="panel form-panel stack" th:action="@{/residents/save}" th:object="${form}" method="post">
-<div th:replace="~{fragments :: form-errors}"></div><input type="hidden" th:field="*{id}">
-<label for="name">Nama lengkap<input id="name" th:field="*{name}" maxlength="100" autocomplete="name" required><small class="field-error" th:errors="*{name}"></small></label>
-<label for="phone">Nomor HP<input id="phone" th:field="*{phone}" type="tel" minlength="8" maxlength="20" pattern="[+0-9() \-]{8,20}" autocomplete="tel" required><small class="field-error" th:errors="*{phone}"></small></label>
-<label for="roomId">Kamar<select id="roomId" th:field="*{roomId}" th:disabled="${form.id != null}" required><option value="">Pilih kamar kosong</option><option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.number + ' · ' + @display.money(room.rate)}"></option></select><small class="field-error" th:errors="*{roomId}"></small></label>
+<p class="form-intro">Semua kolom wajib diisi.</p><div th:replace="~{fragments :: form-errors}"></div><input type="hidden" th:field="*{id}">
+<label for="name">Nama lengkap<input id="name" th:field="*{name}" th:attr="aria-invalid=${#fields.hasErrors('name')},aria-describedby='name-error'" maxlength="100" autocomplete="name" required><small id="name-error" class="field-error" th:errors="*{name}"></small></label>
+<label for="phone">Nomor HP<input id="phone" th:field="*{phone}" th:attr="aria-invalid=${#fields.hasErrors('phone')},aria-describedby='phone-error'" type="tel" minlength="8" maxlength="20" pattern="[+0-9() \-]{8,20}" autocomplete="tel" required><small id="phone-error" class="field-error" th:errors="*{phone}"></small></label>
+<label for="roomId">Kamar<select id="roomId" th:field="*{roomId}" th:attr="aria-invalid=${#fields.hasErrors('roomId')},aria-describedby='roomId-error'" th:disabled="${form.id != null}" required><option value="">Pilih kamar kosong</option><option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.number + ' · ' + @display.money(room.rate)}"></option></select><small id="roomId-error" class="field-error" th:errors="*{roomId}"></small></label>
 <input th:if="${form.id != null}" type="hidden" name="roomId" th:value="${form.roomId}">
 <p th:if="${form.id == null && #lists.isEmpty(rooms)}" class="note">Tidak ada kamar kosong. <a class="text-link" th:href="@{/rooms/new}">Tambahkan kamar</a> terlebih dahulu.</p>
-<label for="moveIn">Tanggal masuk<input id="moveIn" th:field="*{moveIn}" type="date" th:max="${today}" th:readonly="${lockedDate}" required><small class="field-error" th:errors="*{moveIn}"></small></label>
+<label for="moveIn">Tanggal masuk<input id="moveIn" th:field="*{moveIn}" th:attr="aria-invalid=${#fields.hasErrors('moveIn')},aria-describedby='moveIn-error'" type="date" th:max="${today}" th:readonly="${lockedDate}" required><small id="moveIn-error" class="field-error" th:errors="*{moveIn}"></small></label>
 <p class="note" th:if="${form.id != null}">Kamar tidak dapat diganti. Tanggal masuk dikunci setelah penghuni memiliki tagihan.</p>
-<div class="form-actions"><button class="button" type="submit" th:disabled="${#lists.isEmpty(rooms)}">Simpan penghuni</button><a class="button secondary" th:href="@{/residents}">Batal</a></div>
+<div class="form-actions"><button class="button" type="submit" th:disabled="${#lists.isEmpty(rooms)}"><svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#check}"></use></svg>Simpan penghuni</button><a class="button secondary" th:href="@{/residents}">Batal</a></div>
 </form></main></div></body></html>

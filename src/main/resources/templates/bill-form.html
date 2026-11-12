@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments :: head('Buat tagihan')}"></head>
-<body><aside th:replace="~{fragments :: sidebar}"></aside><div class="workspace"><header th:replace="~{fragments :: topbar}"></header><main>
-<a class="back" th:href="@{/bills}">← Tagihan</a><div class="page-heading"><div><p class="eyebrow">SEWA BULANAN</p><h1>Buat tagihan</h1><p class="muted">Periksa daftar nominal sebelum menyimpan tagihan.</p></div></div><div th:replace="~{fragments :: messages}"></div>
+<body><aside th:replace="~{fragments :: sidebar}"></aside><div class="workspace"><header th:replace="~{fragments :: topbar}"></header><main id="main-content">
+<a class="back" th:href="@{/bills}"><svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#back}"></use></svg> Tagihan</a><div class="page-heading"><div><p class="eyebrow">SEWA BULANAN</p><h1>Buat tagihan</h1><p class="muted">Periksa daftar nominal sebelum menyimpan tagihan.</p></div></div><div th:replace="~{fragments :: messages}"></div>
 <section class="panel"><form class="filters" th:action="@{/bills/new}" method="get">
 <label for="period">Periode tagihan<input id="period" type="month" name="period" th:value="${period}" th:max="${currentMonth}" required></label>
 <label for="residentId">Penghuni<select id="residentId" name="residentId"><option value="">Semua penghuni aktif</option><option th:each="r : ${residents}" th:value="${r.id}" th:text="${r.name + ' · ' + r.room.number}" th:selected="${residentId == r.id}"></option></select></label><button class="button secondary" type="submit">Lihat nominal</button></form>

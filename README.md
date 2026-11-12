@@ -31,6 +31,12 @@ LA2 membahas penerapan awal OOP, login, dashboard dan koneksi database. Pengemba
 
 Data contoh, jika dimuat untuk demonstrasi, adalah data fiktif dan bukan data penghuni nyata. Akun admin dibuat sekali pada database kosong dan disimpan sebagai hash. Kata sandi di atas hanya untuk latihan lokal.
 
+## Spring pada pertemuan 5
+
+ActivityAspect mencatat nama pengguna, operasi perubahan data pada KosService, hasil dan durasi di Output NetBeans. Anotasi @Aspect dan @Around memisahkan logging dari aturan bisnis. Spring mendaftarkannya melalui @Component. Constructor pada service menggunakan Dependency Injection, sedangkan @Transactional mengelola transaksi Hibernate. Log ini merupakan catatan eksekusi, bukan riwayat pembayaran tersimpan. Isi formulir tidak dimasukkan ke log.
+
+ActivityAspectTest memeriksa log operasi berhasil dan gagal serta memastikan validasi tetap berlaku. Data tes dibatalkan setelah pengujian. Untuk melihat log saat memakai aplikasi, jalankan proyek lalu simpan atau ubah data kamar.
+
 ## Pengujian dan GitHub
 
 Clean and Build menjalankan pengujian integrasi serta membuat JAR pada target/. Data pengujian dibatalkan setelah setiap tes. Semua source Java, HTML, CSS, JavaScript, SQL, pom.xml dan nbactions.xml dapat disimpan di GitHub. Folder target/, konfigurasi rahasia dan berkas database tidak perlu diunggah.

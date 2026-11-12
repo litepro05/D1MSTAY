@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="id" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments :: head('Data kamar')}"></head>
-<body><aside th:replace="~{fragments :: sidebar}"></aside><div class="workspace"><header th:replace="~{fragments :: topbar}"></header><main>
+<body><aside th:replace="~{fragments :: sidebar}"></aside><div class="workspace"><header th:replace="~{fragments :: topbar}"></header><main id="main-content">
 <div th:replace="~{fragments :: messages}"></div>
-<div class="page-heading"><div><p class="eyebrow">RUANG & TARIF</p><h1>Data kamar</h1><p class="muted">Status kamar mengikuti data penghuni aktif.</p></div><a class="button" th:href="@{/rooms/new}">+ Tambah kamar</a></div>
+<div class="page-heading"><div><p class="eyebrow">RUANG & TARIF</p><h1>Data kamar</h1><p class="muted">Status kamar mengikuti data penghuni aktif.</p></div><a class="button" th:href="@{/rooms/new}"><svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#plus}"></use></svg>Tambah kamar</a></div>
 <section class="panel"><div class="panel-heading"><h2>Daftar kamar</h2><span class="muted" th:text="${#lists.size(rooms) + ' kamar'}"></span></div>
 <div class="table-wrap"><table><thead><tr><th>Nomor kamar</th><th>Tarif / bulan</th><th>Status</th><th>Tindakan</th></tr></thead><tbody>
 <tr th:each="room : ${rooms}"><td><strong th:text="${room.number}"></strong></td><td class="numeric" th:text="${@display.money(room.rate)}"></td>
 <td><span class="badge" th:classappend="${occupiedIds.contains(room.id) ? 'green' : 'neutral'}" th:text="${occupiedIds.contains(room.id) ? 'Terisi' : 'Kosong'}"></span></td>
-<td><div class="actions"><a class="button small secondary" th:href="@{/rooms/{id}/edit(id=${room.id})}">Edit</a><form th:action="@{/rooms/{id}/delete(id=${room.id})}" method="post" data-confirm="Hapus kamar ini? Kamar terisi atau terkait tagihan tidak dapat dihapus."><button class="button small danger" type="submit">Hapus</button></form></div></td></tr>
+<td><div class="actions"><a class="button small secondary" th:href="@{/rooms/{id}/edit(id=${room.id})}"><svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#edit}"></use></svg>Edit</a><form th:action="@{/rooms/{id}/delete(id=${room.id})}" method="post" data-confirm="Hapus kamar ini? Kamar terisi atau terkait tagihan tidak dapat dihapus."><button class="button small danger" type="submit"><svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#trash}"></use></svg>Hapus</button></form></div></td></tr>
 <tr th:if="${#lists.isEmpty(rooms)}"><td colspan="4" class="empty">Belum ada kamar. Tambahkan kamar pertama untuk mulai mencatat penghuni.</td></tr>
 </tbody></table></div></section><p class="note">Tarif bulanan sudah termasuk air dan listrik. Perubahan tarif hanya berlaku pada tagihan baru.</p>
 </main></div></body></html>

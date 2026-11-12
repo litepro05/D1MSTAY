@@ -3,8 +3,8 @@
 <head th:replace="~{fragments :: head('Masuk admin')}"></head>
 <body class="login-page">
 <main class="login-shell">
-  <section class="login-story"><a class="brand" th:href="@{/}"><span class="brand-mark">D1</span><span>D1MSTAY<small>Pengelolaan kos</small></span></a>
-    <div><p class="eyebrow">RUANG UNTUK LEBIH TERTATA</p><h1>Urus kos.<br>Tanpa catatan<br>yang tercecer.</h1><p>Kamar, penghuni, dan tagihan bulanan.<br>Semua tercatat dalam satu tempat.</p></div>
+  <section class="login-story"><a class="brand" th:href="@{/}" aria-label="D1MSTAY, halaman utama"><img class="brand-logo" th:src="@{/brand/d1mstay-logo.png}" width="1010" height="532" alt="D1MSTAY"><span class="brand-caption">Pengelolaan kos</span></a>
+    <div><p class="eyebrow">ADMINISTRASI KOS</p><h1>Kelola kos<br>dari satu tempat.</h1><p>Catat kamar dan penghuni, periksa tagihan, lalu pantau pembayaran bulanan.</p></div>
     <span class="story-foot">Administrasi kos · D1MSTAY</span>
   </section>
   <section class="login-form"><p class="eyebrow">AKSES PENGELOLA</p><h2>Selamat datang.</h2><p class="muted">Masuk untuk mengelola kos D1MSTAY.</p>
@@ -13,7 +13,7 @@
     <form th:action="@{/login}" method="post" class="stack">
       <label for="username">Nama pengguna<input id="username" name="username" autocomplete="username" required autofocus></label>
       <label for="password">Kata sandi<input id="password" name="password" type="password" autocomplete="current-password" required></label>
-      <button class="button" type="submit">Masuk ke dashboard <span aria-hidden="true">→</span></button>
+      <button class="button" type="submit">Masuk ke dashboard <svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#arrow}"></use></svg></button>
     </form><p class="login-note">Khusus pemilik atau pengelola kos.</p>
   </section>
 </main>

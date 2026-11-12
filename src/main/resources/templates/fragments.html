@@ -4,28 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title th:text="${title + ' · D1MSTAY'}">D1MSTAY</title>
+  <meta name="theme-color" content="#07345b">
+  <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+  <link rel="apple-touch-icon" th:href="@{/brand/apple-touch-icon.png}">
   <link rel="stylesheet" th:href="@{/app.css}">
   <script th:src="@{/app.js}" defer></script>
 </head>
 <body>
 <aside th:fragment="sidebar" class="sidebar">
-  <a class="brand" th:href="@{/}"><span class="brand-mark">D1</span><span>D1MSTAY<small>Pengelolaan kos</small></span></a>
+  <a class="skip-link" href="#main-content">Langsung ke konten</a>
+  <a class="brand" th:href="@{/}" aria-label="D1MSTAY, halaman utama"><img class="brand-logo" th:src="@{/brand/d1mstay-logo.png}" width="1010" height="532" alt="D1MSTAY"><span class="brand-caption">Pengelolaan kos</span></a>
   <p class="nav-label">MENU UTAMA</p>
   <nav aria-label="Menu utama">
-    <a th:href="@{/}" th:classappend="${uri == '/' ? 'active' : ''}" th:attr="aria-current=${uri == '/' ? 'page' : null}"><span class="nav-icon">01</span>Dashboard</a>
-    <a th:href="@{/rooms}" th:classappend="${uri.startsWith('/rooms') ? 'active' : ''}"><span class="nav-icon">02</span>Data kamar</a>
-    <a th:href="@{/residents}" th:classappend="${uri.startsWith('/residents') ? 'active' : ''}"><span class="nav-icon">03</span>Penghuni</a>
-    <a th:href="@{/bills}" th:classappend="${uri.startsWith('/bills') ? 'active' : ''}"><span class="nav-icon">04</span>Tagihan</a>
-    <a th:href="@{/reports}" th:classappend="${uri.startsWith('/reports') ? 'active' : ''}"><span class="nav-icon">05</span>Laporan</a>
+    <a th:href="@{/}" th:classappend="${uri == '/' ? 'active' : ''}" th:attr="aria-current=${uri == '/' ? 'page' : null}"><svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#dashboard}"></use></svg>Dashboard</a>
+    <a th:href="@{/rooms}" th:classappend="${uri.startsWith('/rooms') ? 'active' : ''}" th:attr="aria-current=${uri.startsWith('/rooms') ? 'page' : null}"><svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#room}"></use></svg>Data kamar</a>
+    <a th:href="@{/residents}" th:classappend="${uri.startsWith('/residents') ? 'active' : ''}" th:attr="aria-current=${uri.startsWith('/residents') ? 'page' : null}"><svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#users}"></use></svg>Penghuni</a>
+    <a th:href="@{/bills}" th:classappend="${uri.startsWith('/bills') ? 'active' : ''}" th:attr="aria-current=${uri.startsWith('/bills') ? 'page' : null}"><svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#bill}"></use></svg>Tagihan</a>
+    <a th:href="@{/reports}" th:classappend="${uri.startsWith('/reports') ? 'active' : ''}" th:attr="aria-current=${uri.startsWith('/reports') ? 'page' : null}"><svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#chart}"></use></svg>Laporan</a>
   </nav>
-  <div class="sidebar-bottom"><div class="account"><span class="avatar">A</span><div>Admin kos<small>Satu tempat, lebih tertata.</small></div></div>
-    <form th:action="@{/logout}" method="post"><button class="logout" type="submit">Keluar dari akun <span aria-hidden="true">↗</span></button></form>
+  <div class="sidebar-bottom"><div class="account"><span class="avatar">A</span><div>Admin kos<small>Akses pengelola</small></div></div>
+    <form th:action="@{/logout}" method="post"><button class="logout" type="submit">Keluar dari akun <svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#logout}"></use></svg></button></form>
   </div>
 </aside>
 <header th:fragment="topbar" class="topbar"><span>Administrasi / <strong>D1MSTAY</strong></span><span th:text="${@display.date(today)}"></span></header>
 <div th:fragment="messages" aria-live="polite">
-  <div class="alert success" th:if="${notice}" th:text="${notice}"></div>
-  <div class="alert error" role="alert" th:if="${error}" th:text="${error}"></div>
+  <div class="alert success" role="status" th:if="${notice}"><svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#check}"></use></svg><span th:text="${notice}"></span><button class="notice-close" type="button" data-dismiss-notice aria-label="Tutup notifikasi"><svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#close}"></use></svg></button></div>
+  <div class="alert error" role="alert" th:if="${error}"><svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#info}"></use></svg><span th:text="${error}"></span></div>
 </div>
 <div th:fragment="form-errors" class="alert error" role="alert" th:if="${#fields.hasGlobalErrors()}">
   <p th:each="error : ${#fields.globalErrors()}" th:text="${error}"></p>
@@ -36,9 +40,9 @@
       <td><strong th:text="${bill.resident.name}"></strong><small th:text="${'Kamar ' + bill.resident.room.number}"></small></td>
       <td th:text="${@display.month(bill.period)}"></td><td class="numeric" th:text="${@display.money(bill.amount)}"></td>
       <td th:text="${@display.date(bill.dueDate)}"></td>
-      <td><span class="badge" th:classappend="${bill.paid ? 'green' : (bill.overdue ? 'red' : 'amber')}" th:text="${bill.paid ? 'Lunas' : 'Belum Lunas'}"></span><small th:if="${bill.overdue}">Lewat jatuh tempo</small></td>
-      <td><a class="text-link" th:href="@{/bills/{id}(id=${bill.id})}">Rincian →</a></td>
-    </tr><tr th:if="${#lists.isEmpty(records)}"><td colspan="6" class="empty">Belum ada tagihan yang sesuai.</td></tr></tbody>
+      <td><span class="badge" th:classappend="${bill.paid ? 'green' : (bill.overdue ? 'red' : 'amber')}" th:text="${bill.paid ? 'Lunas' : (bill.overdue ? 'Lewat tempo' : 'Belum lunas')}"></span></td>
+      <td><a class="text-link" th:href="@{/bills/{id}(id=${bill.id})}">Rincian <svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#arrow}"></use></svg></a></td>
+    </tr><tr th:if="${#lists.isEmpty(records)}"><td colspan="6" class="empty"><strong>Tidak ada tagihan pada daftar ini.</strong><span>Coba ubah filter atau buat tagihan untuk periode yang dibutuhkan.</span></td></tr></tbody>
   </table>
 </div>
 </body></html>

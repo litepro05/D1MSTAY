@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="id" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments :: head('Catat penghuni keluar')}"></head>
-<body><aside th:replace="~{fragments :: sidebar}"></aside><div class="workspace"><header th:replace="~{fragments :: topbar}"></header><main>
-<a class="back" th:href="@{/residents}">← Penghuni</a><div class="page-heading"><div><p class="eyebrow">AKHIR PENGHUNIAN</p><h1>Catat penghuni keluar</h1><p class="muted">Riwayat tagihan dan pembayaran tetap tersimpan.</p></div></div>
+<body><aside th:replace="~{fragments :: sidebar}"></aside><div class="workspace"><header th:replace="~{fragments :: topbar}"></header><main id="main-content">
+<a class="back" th:href="@{/residents}"><svg class="icon " aria-hidden="true" focusable="false"><use th:href="@{/icons.svg#back}"></use></svg> Penghuni</a><div class="page-heading"><div><p class="eyebrow">AKHIR PENGHUNIAN</p><h1>Catat penghuni keluar</h1><p class="muted">Riwayat tagihan dan pembayaran tetap tersimpan.</p></div></div>
 <section class="panel form-panel stack"><dl class="details"><div><dt>Nama penghuni</dt><dd th:text="${resident.name}"></dd></div><div><dt>Kamar</dt><dd th:text="${resident.room.number}"></dd></div><div><dt>Tanggal masuk</dt><dd th:text="${@display.date(resident.moveIn)}"></dd></div></dl>
 <form th:if="${resident.active}" class="stack" th:action="@{/residents/{id}/checkout(id=${resident.id})}" method="post" data-confirm="Catat penghuni ini keluar? Kamar akan kembali tersedia dan tagihan baru tidak dapat dibuat.">
 <label for="date">Tanggal keluar<input id="date" name="date" type="date" th:value="${today}" th:min="${resident.moveIn}" th:max="${today}" required></label>

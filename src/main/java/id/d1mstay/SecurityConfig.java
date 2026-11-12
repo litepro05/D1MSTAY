@@ -25,7 +25,7 @@ class SecurityConfig {
     SecurityFilterChain security(HttpSecurity http) throws Exception {
         return http
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/app.css", "/app.js", "/health", "/error").permitAll()
+                .requestMatchers("/login", "/app.css", "/app.js", "/icons.svg", "/favicon.ico", "/brand/**", "/health", "/error").permitAll()
                 .anyRequest().authenticated())
             .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/", true).permitAll())
             .logout(logout -> logout.logoutSuccessUrl("/login?logout"))
